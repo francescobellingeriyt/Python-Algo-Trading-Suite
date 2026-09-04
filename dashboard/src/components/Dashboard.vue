@@ -78,6 +78,12 @@
           <p v-if="stats.max_drawdown_peak_equity" class="text-xs text-gray-500">
             -{{ formatMoney(stats.max_drawdown_percent) }}% from peak ${{ formatMoney(stats.max_drawdown_peak_equity) }}
           </p>
+          <!-- The field is missing entirely on a backend that predates the
+               drawdown fix. That is a different problem from a backend that ran
+               the fix and could not resolve the starting equity, so say which. -->
+          <p v-else-if="!('max_drawdown_peak_equity' in stats)" class="text-xs text-amber-500/70">
+            peak-to-trough &middot; backend out of date
+          </p>
           <p v-else-if="stats.max_drawdown_dollar" class="text-xs text-amber-500/70">
             peak-to-trough &middot; set STARTING_EQUITY for %
           </p>
